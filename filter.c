@@ -64,8 +64,13 @@ int main(int argc, char **argv)
         frame_width = (unsigned char)checker;
         if (frame_width > DISP_W)
         {
-            const char error[] = "W: Frame height invalid!\n";
-            write(STDERR_FILENO, &error, 25);
+            const char error[] = "W: Frame width invalid!\n";
+            write(STDERR_FILENO, &error, 24);
+        }
+        if (frame_width != DISP_W)
+        {
+            const char error[] = "W: Frame width other than 178 is currently not supported, you will experience problems!\n";
+            write(STDERR_FILENO, &error, 88);
         }
     }
     //send "header" to the display driver
