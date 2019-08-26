@@ -56,10 +56,6 @@ Compilation:
 $ gcc filter.c -o a.out
 $ arm-linux-gnueabi-gcc display.c -o b.out
 ```
-then put the display driver on the brick
-```sh
-$ scp b.out root@<brick-ip>:~/
-```
 
 #### Convert videos
 
