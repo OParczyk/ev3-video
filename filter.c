@@ -14,7 +14,8 @@
 
 int main(int argc, char **argv)
 {
-
+    // Read "header": First Byte=pixel width, 2nd Byte=frame height, 3rd=frame width
+    // frame_width other than 178 is currently unsupported.
     unsigned char ch, step = 1, frame_height = 128, frame_width = 178;
     unsigned long checker;
     char *ptr;
@@ -67,10 +68,12 @@ int main(int argc, char **argv)
             write(STDERR_FILENO, &error, 25);
         }
     }
+    //send "header" to the display driver
     write(STDOUT_FILENO, &step, 1);
     write(STDOUT_FILENO, &frame_height, 1);
     write(STDOUT_FILENO, &frame_width, 1);
 
+    //send luminence stream to the brick, ignore chroma
     unsigned int count = 0;
     while (read(STDIN_FILENO, &ch, 1) > 0)
     {
@@ -84,7 +87,6 @@ int main(int argc, char **argv)
             continue;
         if (count <= frame_height * DISP_W + CRAP_AT_START_OF_FRAME && (count - CRAP_AT_START_OF_FRAME) % step == 0)
         {
-            //if(count-CRAP_AT_START_OF_FRAME)% && count-CRAP_AT_START_OF_FRAME<)
             write(STDOUT_FILENO, &ch, 1);
         }
     }
